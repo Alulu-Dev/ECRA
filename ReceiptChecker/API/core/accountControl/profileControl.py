@@ -10,8 +10,7 @@ def create_new_customer(personal_info):
         new_customer.code_name = personal_info['username']
         new_customer.legal_name = personal_info['full name']
         new_customer.password = personal_info['password']
-        new_customer.profile_picture = profile_picture
-
+        
         new_customer.save()
 
     except ResponseError:
@@ -56,7 +55,7 @@ def update_customer_account_details(account_id, new_data):
             account.update(ser__legal_name=new_data['full name'])
         if 'password' in new_data and new_data['password'] != account.password:
             account.update(set__password=new_data['password'])
-            
+
         display_customer_account_details(account_id)
     except ResponseError:
         return "Data Couldn't Be Fetched", 500
