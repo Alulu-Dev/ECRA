@@ -38,7 +38,6 @@ def display_customer_account_details(account_id):
         response = {
             'username': account.code_name,
             'official name': account.legal_name,
-            'receipt count': account.receipt_count
         }
         return {'user': response}
     except ValidationError:
