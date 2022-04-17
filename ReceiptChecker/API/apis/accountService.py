@@ -4,8 +4,8 @@ from werkzeug.utils import secure_filename
 from tempfile import TemporaryDirectory
 from flask_login import current_user, login_required
 
-from ..core.userControl import (user_signup, delete_account,
-                                get_customer, update_customer)
+from ..core.accountControl import (user_signup, delete_account,
+                                   get_customer, update_customer)
 
 api = Namespace('account', description="Endpoint to create, update and delete accounts on the system")
 
@@ -16,7 +16,6 @@ profile_input = {
 }
 
 profile_form = api.model('User', profile_input)
-
 
 
 @api.route('/signup/user/')
@@ -59,4 +58,3 @@ class UserAccountControl(Resource):
         Modify account details
         """
         return update_customer(current_user.id, request.json), 400
-

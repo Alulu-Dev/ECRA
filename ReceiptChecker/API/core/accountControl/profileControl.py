@@ -1,4 +1,4 @@
-from urllib3.exceptions import ResponseError
+from mongoengine import ValidationError
 
 from ..model import User
 
@@ -13,7 +13,7 @@ def create_new_customer(personal_info):
         
         new_customer.save()
 
-    except ResponseError:
+    except ValidationError:
         return "Data cannot be Created", 500
 
 
@@ -41,13 +41,13 @@ def display_customer_account_details(account_id):
             'receipt count': account.receipt_count
         }
         return {'user': response}
-    except ResponseError:
+    except ValidationError:
         return "Data Couldn't Be Fetched", 500
 
 
 def update_customer_account_details(account_id, new_data):
     try:
-        account = accountModel.objects.get(id=account_id)
+        account = User.objects.get(id=account_id)
 
         if 'username' in new_data and new_data['username'] != account.code_name:
             account.update(set__code_name= new_data['username'])
@@ -57,5 +57,5 @@ def update_customer_account_details(account_id, new_data):
             account.update(set__password=new_data['password'])
 
         display_customer_account_details(account_id)
-    except ResponseError:
+    except ValidationError:
         return "Data Couldn't Be Fetched", 500
